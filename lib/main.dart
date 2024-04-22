@@ -9,23 +9,22 @@ import 'package:t2024it5_campuseventscalendar_web/provider/SignInProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:t2024it5_campuseventscalendar_web/screens/homeScreen.dart';
 import 'package:t2024it5_campuseventscalendar_web/screens/loginScreen.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
-void main() async {
+main() {
   runApp(
     MainApp(),
   );
 }
 
 class MainApp extends StatelessWidget {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+ 
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _initialization,
+        future: Firebase.initializeApp(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return ErrorPage();
