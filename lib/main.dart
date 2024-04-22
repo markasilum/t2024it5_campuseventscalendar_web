@@ -11,7 +11,7 @@ import 'package:t2024it5_campuseventscalendar_web/screens/homeScreen.dart';
 import 'package:t2024it5_campuseventscalendar_web/screens/loginScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-void main() {
+void main() async {
   runApp(
     MainApp(),
   );
