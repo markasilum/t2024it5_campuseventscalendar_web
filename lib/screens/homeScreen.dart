@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:t2024it5_campuseventscalendar_web/screens/loginScreen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -13,8 +14,28 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          child: Text("HOME SCREEN"),
-        ),
+                          decoration: BoxDecoration(
+                              color: Colors.purple,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          width: 400,
+                          height: 40,
+                          child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoginScreen()),
+                                );
+                              },
+                              child: Text(
+                                "Logout",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              )),
+                        ),
       ),
     );
   }
