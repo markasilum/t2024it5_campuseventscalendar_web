@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:t2024it5_campuseventscalendar_web/screens/homeScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
