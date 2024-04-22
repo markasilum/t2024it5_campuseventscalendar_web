@@ -46,7 +46,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 50,
                     ),
                     const Text(
                       "Enter your email address",
@@ -62,20 +62,20 @@ class LoginScreen extends StatelessWidget {
                         hintStyle: TextStyle(color: Colors.grey),
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text("Enter you password"),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    const TextField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.key,size: 24), // Adding the icon
-                          hintText: "atleast 8 characters",
-                          hintStyle: TextStyle(color: Colors.grey)),
-                    ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // Text("Enter you password"),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                    // const TextField(
+                    //   decoration: InputDecoration(
+                    //       border: OutlineInputBorder(),
+                    //       prefixIcon: Icon(Icons.key,size: 24), // Adding the icon
+                    //       hintText: "atleast 8 characters",
+                    //       hintStyle: TextStyle(color: Colors.grey)),
+                    // ),
                     const SizedBox(
                       height: 40,
                     ),
