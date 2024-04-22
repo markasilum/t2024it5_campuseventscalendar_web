@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:t2024it5_campuseventscalendar_web/provider/SignInProvider.dart';
 import 'package:t2024it5_campuseventscalendar_web/screens/homeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,6 +11,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        
     return Scaffold(
       body: Container(
           width: MediaQuery.of(context).size.width,
@@ -104,18 +107,19 @@ class LoginScreen extends StatelessWidget {
                           width: 400,
                           height: 40,
                           child: TextButton(
-                              onPressed: () {
-                                signInWithGoogle();
-                                if (FirebaseAuth.instance.currentUser != null) {
-                                  print(FirebaseAuth.instance.currentUser?.uid);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const HomeScreen()),
-                                  );
-                                }
-                              },
+                              onPressed: () async {
+                               context.read<SignInProvider>().signInWithGoogle();
+                              //   signInWithGoogle();
+                              //   if (FirebaseAuth.instance.currentUser != null) {
+                              //     print(FirebaseAuth.instance.currentUser?.uid);
+                              //     Navigator.push(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //           builder: (context) =>
+                              //               const HomeScreen()),
+                              //     );
+                              //   }
+                               },
                               child: Text(
                                 "Login with google",
                                 style: TextStyle(
@@ -131,25 +135,25 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Future<UserCredential> signInWithGoogle() async {
-    // Create a new provider
-    GoogleAuthProvider googleProvider = GoogleAuthProvider();
+//   Future<UserCredential> signInWithGoogle() async {
+//     // Create a new provider
+//     GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
 
-    // Once signed in, return the UserCredential
-    try {
-    var userCredential = await FirebaseAuth.instance.signInWithPopup(googleProvider);
-    // print(userCredential);
+//     // Once signed in, return the UserCredential
+//     try {
+//     var userCredential = await FirebaseAuth.instance.signInWithPopup(googleProvider);
+//     // print(userCredential);
 
-    return userCredential;
-} catch (error) {
-    // Handle the error appropriately
-   print("An error occurred while signing in: $error");
-    // Optionally, you can throw the error again to let the caller handle it
-    throw error;
-}
+//     return userCredential;
+// } catch (error) {
+//     // Handle the error appropriately
+//    print("An error occurred while signing in: $error");
+//     // Optionally, you can throw the error again to let the caller handle it
+//     throw error;
+// }
     
-    // Or use signInWithRedirect
-    // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
-  }
+//     // Or use signInWithRedirect
+//     // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+//   }
 }
