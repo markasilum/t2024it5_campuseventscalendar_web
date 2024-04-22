@@ -9,8 +9,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        // final signInProvider = Provider.of<SignInProvider>(context, listen: false);
-        
+    final signInProvider = Provider.of<SignInProvider>(context, listen: false);
 
     return Scaffold(
       body: Container(
@@ -83,12 +82,9 @@ class LoginScreen extends StatelessWidget {
                           height: 40,
                           child: TextButton(
                               onPressed: () {
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const HomeScreen()),
-                                );
+                                if (FirebaseAuth.instance.currentUser != null) {
+                                  print(FirebaseAuth.instance.currentUser?.uid);
+                                }
                               },
                               child: Text(
                                 "Login",
@@ -109,16 +105,8 @@ class LoginScreen extends StatelessWidget {
                           height: 40,
                           child: TextButton(
                               onPressed: () {
-                                // signInProvider.signInWithGoogle();
-                                // if (FirebaseAuth.instance.currentUser != null) {
-                                //   print(FirebaseAuth.instance.currentUser?.uid);
-                                //   Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) =>
-                                //             const HomeScreen()),
-                                //   );
-                                // }
+                                signInProvider.signInWithGoogle(context);
+                                
                               },
                               child: Text(
                                 "Login with google",
@@ -139,7 +127,6 @@ class LoginScreen extends StatelessWidget {
 //     // Create a new provider
 //     GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-
 //     // Once signed in, return the UserCredential
 //     try {
 //     var userCredential = await FirebaseAuth.instance.signInWithPopup(googleProvider);
@@ -152,7 +139,7 @@ class LoginScreen extends StatelessWidget {
 //     // Optionally, you can throw the error again to let the caller handle it
 //     throw error;
 // }
-    
+
 //     // Or use signInWithRedirect
 //     // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
 //   }

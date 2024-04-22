@@ -1,61 +1,33 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
+import 'package:t2024it5_campuseventscalendar_web/screens/homeScreen.dart';
 
 class SignInProvider extends ChangeNotifier {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  Future<void> signInWithGoogle(BuildContext context) async {
+    // Create a new provider
+    GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-  User? _user;
+    googleProvider
+        .addScope('https://www.googleapis.com/auth/contacts.readonly');
+    googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
 
-  User? get user => _user;
+    // Once signed in, return the UserCredential
+    await FirebaseAuth.instance.signInWithPopup(googleProvider);
 
-  // Sign in with Google
-  Future<void> signInWithGoogle() async {
-    try {
-      // Trigger the Google sign-in flow
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser != null) {
-        // Obtain the auth details from the request
-        final GoogleSignInAuthentication googleAuth =
-            await googleUser.authentication;
-
-        // Create a new credential
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-
-        // Sign in to Firebase with the credential
-        final UserCredential userCredential =
-            await _auth.signInWithCredential(credential);
-
-        // Update the user state
-        _user = userCredential.user;
-
-        // Notify listeners
-        notifyListeners();
-      }
-    } catch (error) {
-      // Handle the error appropriately
-      print("An error occurred while signing in: $error");
-      // You can throw the error again to let the caller handle it
-      throw error;
+    if (FirebaseAuth.instance.currentUser != null) {
+      print(FirebaseAuth.instance.currentUser?.uid);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
     }
+
+    // Or use signInWithRedirect
+    // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
   }
 
-  // Sign out
-  Future<void> signOut() async {
-    try {
-      await _auth.signOut();
-      _user = null;
-      // Notify listeners
-      notifyListeners();
-    } catch (error) {
-      // Handle the error appropriately
-      print("An error occurred while signing out: $error");
-      // You can throw the error again to let the caller handle it
-      throw error;
-    }
-  }
+//     // Or use signInWithRedirect
+//     // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+//   }
 }
