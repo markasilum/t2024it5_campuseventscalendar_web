@@ -16,7 +16,7 @@ class LoginScreen extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.symmetric(horizontal: 130, vertical: 50),
-          color: Colors.green[100],
+          color: Color.fromARGB(255, 128, 183, 235),
           child: Center(
             child: Container(
               height: MediaQuery.of(context).size.height * .70,
@@ -30,18 +30,27 @@ class LoginScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    const Row(
-                      children: [
-                        Icon(Icons.calendar_month, size: 50),
-                        Text(
-                          "Campus Events",
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    Center(
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 100,
+                            child: Image(
+                              image: NetworkImage(
+                                  'https://i.imgur.com/VPg47zp.png'),
+                            ),
+                          ),
+                          Text(
+                            "Ateneo de Davao Campus Events",
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 50,
                     ),
                     const Text(
                       "Enter your email address",
@@ -49,61 +58,43 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const TextField(
+                    TextField(
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "name@example.com",
-                          hintStyle: TextStyle(color: Colors.grey)),
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.person,size: 24), // Adding the icon
+                        hintText: "name@example.com",
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text("Enter you password"),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    const TextField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "atleast 8 characters",
-                          hintStyle: TextStyle(color: Colors.grey)),
-                    ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // Text("Enter you password"),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                    // const TextField(
+                    //   decoration: InputDecoration(
+                    //       border: OutlineInputBorder(),
+                    //       prefixIcon: Icon(Icons.key,size: 24), // Adding the icon
+                    //       hintText: "atleast 8 characters",
+                    //       hintStyle: TextStyle(color: Colors.grey)),
+                    // ),
                     const SizedBox(
                       height: 40,
                     ),
                     Column(
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.purple,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          width: 400,
-                          height: 40,
-                          child: TextButton(
-                              onPressed: () {
-                                if (FirebaseAuth.instance.currentUser != null) {
-                                  print(FirebaseAuth.instance.currentUser?.uid);
-                                }
-                              },
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              )),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.purple,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          width: 400,
-                          height: 40,
-                          child: TextButton(
+
+                        Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xFF08228D),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            width: 400,
+                            height: 40,
+                            child: TextButton(
                               onPressed: () {
                                 signInProvider.signInWithGoogle(context);
                                 
