@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:t2024it5_campuseventscalendar_web/provider/SignInProvider.dart';
 import 'package:t2024it5_campuseventscalendar_web/screens/homeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -7,6 +9,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final signInProvider = Provider.of<SignInProvider>(context, listen: false);
+
     return Scaffold(
       body: Container(
           width: MediaQuery.of(context).size.width,
@@ -15,7 +19,7 @@ class LoginScreen extends StatelessWidget {
           color: Color.fromARGB(255, 128, 183, 235),
           child: Center(
             child: Container(
-              height: MediaQuery.of(context).size.height * .55,
+              height: MediaQuery.of(context).size.height * .70,
               width: MediaQuery.of(context).size.width * .3,
               padding: EdgeInsets.symmetric(horizontal: 60, vertical: 45),
               decoration: BoxDecoration(
@@ -81,6 +85,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     Column(
                       children: [
+
                         Center(
                           child: Container(
                             decoration: BoxDecoration(
@@ -90,21 +95,16 @@ class LoginScreen extends StatelessWidget {
                             width: 400,
                             height: 40,
                             child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const HomeScreen()),
-                                  );
-                                },
-                                child: Text(
-                                  "Login",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                )),
-                          ),
+                              onPressed: () {
+                                signInProvider.signInWithGoogle(context);
+                                
+                              },
+                              child: Text(
+                                "Login with google",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              )),
                         ),
                       ],
                     ),
@@ -113,4 +113,25 @@ class LoginScreen extends StatelessWidget {
           )),
     );
   }
+
+//   Future<UserCredential> signInWithGoogle() async {
+//     // Create a new provider
+//     GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+//     // Once signed in, return the UserCredential
+//     try {
+//     var userCredential = await FirebaseAuth.instance.signInWithPopup(googleProvider);
+//     // print(userCredential);
+
+//     return userCredential;
+// } catch (error) {
+//     // Handle the error appropriately
+//    print("An error occurred while signing in: $error");
+//     // Optionally, you can throw the error again to let the caller handle it
+//     throw error;
+// }
+
+//     // Or use signInWithRedirect
+//     // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+//   }
 }
