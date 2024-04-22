@@ -10,32 +10,32 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.purple,
         centerTitle: false,
-        title: Text("Campus Events Calendar", style: TextStyle(color: Colors.white),),
+        title: Text(
+          "Campus Events Calendar",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Center(
         child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.purple,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          width: 400,
-                          height: 40,
-                          child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LoginScreen()),
-                                );
-                              },
-                              child: Text(
-                                "Logout",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              )),
-                        ),
+          decoration: BoxDecoration(
+              color: Colors.purple,
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          width: 400,
+          height: 40,
+          child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                );
+              },
+              child: Text(
+                "Logout",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              )),
+        ),
       ),
     );
   }

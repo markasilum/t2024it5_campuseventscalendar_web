@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:t2024it5_campuseventscalendar_web/screens/homeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -15,7 +17,7 @@ class LoginScreen extends StatelessWidget {
           color: Colors.green[100],
           child: Center(
             child: Container(
-              height: MediaQuery.of(context).size.height * .55,
+              height: MediaQuery.of(context).size.height * .70,
               width: MediaQuery.of(context).size.width * .3,
               padding: EdgeInsets.symmetric(horizontal: 60, vertical: 45),
               decoration: BoxDecoration(
@@ -36,7 +38,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                     const SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     const Text(
@@ -81,8 +83,7 @@ class LoginScreen extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const HomeScreen()),
+                                      builder: (context) => const HomeScreen()),
                                 );
                               },
                               child: Text(
@@ -92,12 +93,63 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               )),
                         ),
-                  
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.purple,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          width: 400,
+                          height: 40,
+                          child: TextButton(
+                              onPressed: () {
+                                signInWithGoogle();
+                                if (FirebaseAuth.instance.currentUser != null) {
+                                  print(FirebaseAuth.instance.currentUser?.uid);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomeScreen()),
+                                  );
+                                }
+                              },
+                              child: Text(
+                                "Login with google",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              )),
+                        ),
                       ],
                     ),
                   ]),
             ),
           )),
     );
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Create a new provider
+    GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+
+    // Once signed in, return the UserCredential
+    try {
+    var userCredential = await FirebaseAuth.instance.signInWithPopup(googleProvider);
+    // print(userCredential);
+
+    return userCredential;
+} catch (error) {
+    // Handle the error appropriately
+   print("An error occurred while signing in: $error");
+    // Optionally, you can throw the error again to let the caller handle it
+    throw error;
+}
+    
+    // Or use signInWithRedirect
+    // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
   }
 }

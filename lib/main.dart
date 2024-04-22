@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:t2024it5_campuseventscalendar_web/screens/homeScreen.dart';
 import 'package:t2024it5_campuseventscalendar_web/screens/loginScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+Future<void> main() async {
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
+  runApp(const MainApp(
+    
 
-void main() {
-  runApp(const MainApp());
+  ));
 }
 
 class MainApp extends StatelessWidget {
@@ -17,7 +25,11 @@ class MainApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginScreen()
+      home: LoginScreen(),
+      routes: {
+        '/home': (context) => HomeScreen(),
+        '/login': (context) => LoginScreen()
+      },
     );
   }
 }
