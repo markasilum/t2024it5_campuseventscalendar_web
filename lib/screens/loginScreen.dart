@@ -16,11 +16,18 @@ class LoginScreen extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.symmetric(horizontal: 130, vertical: 50),
-          color: Color.fromARGB(255, 128, 183, 235),
+          // color: Color.fromARGB(255, 128, 183, 235),
+          // 'https://i.imgur.com/VPg47zp.png'
+          decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage("https://i.imgur.com/hnQrSM4.jpeg"), // Replace with your image URL
+            fit: BoxFit.cover, // This will cover the entire container
+          ),
+        ),
           child: Center(
             child: Container(
               height: MediaQuery.of(context).size.height * .40,
-              width: MediaQuery.of(context).size.width * .3,
+              width: MediaQuery.of(context).size.width * .2,
               padding: EdgeInsets.symmetric(horizontal: 60, vertical: 45),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -93,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                                 color: Color(0xFF08228D),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10))),
-                            width: 400,
+                            width: 250,
                             height: 50,
                             child: TextButton(
                                 onPressed: () {
@@ -101,16 +108,17 @@ class LoginScreen extends StatelessWidget {
                                 },
                                 child: Container(
                                     child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SizedBox(width: 10),
+                                    SizedBox(width: 20),
                                     Image(
                                       height: 30,
                                       image: NetworkImage(
                                           'https://i.imgur.com/VCNBCZt.png'),
                                     ),
-                                    SizedBox(width: 10),
+                                    SizedBox(width: 20),
                                     Text(
-                                      "Login with google",
+                                      "Login with Google",
                                       style: TextStyle(
                                         color: Colors.white,
                                       ),
