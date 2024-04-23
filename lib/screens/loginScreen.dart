@@ -19,7 +19,7 @@ class LoginScreen extends StatelessWidget {
           color: Color.fromARGB(255, 128, 183, 235),
           child: Center(
             child: Container(
-              height: MediaQuery.of(context).size.height * .70,
+              height: MediaQuery.of(context).size.height * .40,
               width: MediaQuery.of(context).size.width * .3,
               padding: EdgeInsets.symmetric(horizontal: 60, vertical: 45),
               decoration: BoxDecoration(
@@ -41,8 +41,10 @@ class LoginScreen extends StatelessWidget {
                                   'https://i.imgur.com/VPg47zp.png'),
                             ),
                           ),
-                          Text(
-                            "Ateneo de Davao Campus Events",
+                          SizedBox(height: 20,),
+                          Text( 
+                            "Ateneo de Davao University Campus Events",
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold),
                           ),
@@ -50,22 +52,22 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 50,
+                      height: 10,
                     ),
-                    const Text(
-                      "Enter your email address",
-                    ),
+                    // const Text(
+                    //   "Enter your email address",
+                    // ),
                     const SizedBox(
                       height: 10,
                     ),
-                    TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.person,size: 24), // Adding the icon
-                        hintText: "name@example.com",
-                        hintStyle: TextStyle(color: Colors.grey),
-                      ),
-                    ),
+                    // TextField(
+                    //   decoration: InputDecoration(
+                    //     border: OutlineInputBorder(),
+                    //     prefixIcon: Icon(Icons.person,size: 24), // Adding the icon
+                    //     hintText: "name@example.com",
+                    //     hintStyle: TextStyle(color: Colors.grey),
+                    //   ),
+                    // ),
                     // const SizedBox(
                     //   height: 20,
                     // ),
@@ -85,7 +87,6 @@ class LoginScreen extends StatelessWidget {
                     ),
                     Column(
                       children: [
-
                         Center(
                           child: Container(
                             decoration: BoxDecoration(
@@ -93,19 +94,31 @@ class LoginScreen extends StatelessWidget {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10))),
                             width: 400,
-                            height: 40,
+                            height: 50,
                             child: TextButton(
-                              onPressed: () {
-                                signInProvider.signInWithGoogle(context);
-                                
-                              },
-                              child: Text(
-                                "Login with google",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              )),
-                        ),
+                                onPressed: () {
+                                  signInProvider.signInWithGoogle(context);
+                                },
+                                child: Container(
+                                    child: Row(
+                                  children: [
+                                    SizedBox(width: 10),
+                                    Image(
+                                      height: 30,
+                                      image: NetworkImage(
+                                          'https://i.imgur.com/VCNBCZt.png'),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      "Login with google",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ))),
+                          ),
+                        )
                       ],
                     ),
                   ]),
