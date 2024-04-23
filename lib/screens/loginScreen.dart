@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:t2024it5_campuseventscalendar_web/provider/SignInProvider.dart';
 import 'package:t2024it5_campuseventscalendar_web/screens/homeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -7,16 +9,25 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final signInProvider = Provider.of<SignInProvider>(context, listen: false);
+
     return Scaffold(
       body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.symmetric(horizontal: 130, vertical: 50),
-          color: Colors.green[100],
+          // color: Color.fromARGB(255, 128, 183, 235),
+          // 'https://i.imgur.com/VPg47zp.png'
+          decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage("https://i.imgur.com/hnQrSM4.jpeg"), // Replace with your image URL
+            fit: BoxFit.cover, // This will cover the entire container
+          ),
+        ),
           child: Center(
             child: Container(
-              height: MediaQuery.of(context).size.height * .55,
-              width: MediaQuery.of(context).size.width * .3,
+              height: MediaQuery.of(context).size.height * .40,
+              width: MediaQuery.of(context).size.width * .2,
               padding: EdgeInsets.symmetric(horizontal: 60, vertical: 45),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -26,73 +37,96 @@ class LoginScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    const Row(
-                      children: [
-                        Icon(Icons.calendar_month, size: 50),
-                        Text(
-                          "Campus Events",
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                     const SizedBox(
-                      height: 10,
-                    ),
-                    const Text(
-                      "Enter your email address",
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const TextField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "name@example.com",
-                          hintStyle: TextStyle(color: Colors.grey)),
+                    Center(
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 100,
+                            child: Image(
+                              image: NetworkImage(
+                                  'https://i.imgur.com/VPg47zp.png'),
+                            ),
+                          ),
+                          SizedBox(height: 20,),
+                          Text( 
+                            "Ateneo de Davao University Campus Events",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    Text("Enter you password"),
-                    SizedBox(
+                    // const Text(
+                    //   "Enter your email address",
+                    // ),
+                    const SizedBox(
                       height: 10,
                     ),
-                    const TextField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "atleast 8 characters",
-                          hintStyle: TextStyle(color: Colors.grey)),
-                    ),
+                    // TextField(
+                    //   decoration: InputDecoration(
+                    //     border: OutlineInputBorder(),
+                    //     prefixIcon: Icon(Icons.person,size: 24), // Adding the icon
+                    //     hintText: "name@example.com",
+                    //     hintStyle: TextStyle(color: Colors.grey),
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // Text("Enter you password"),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                    // const TextField(
+                    //   decoration: InputDecoration(
+                    //       border: OutlineInputBorder(),
+                    //       prefixIcon: Icon(Icons.key,size: 24), // Adding the icon
+                    //       hintText: "atleast 8 characters",
+                    //       hintStyle: TextStyle(color: Colors.grey)),
+                    // ),
                     const SizedBox(
                       height: 40,
                     ),
                     Column(
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.purple,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          width: 400,
-                          height: 40,
-                          child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const HomeScreen()),
-                                );
-                              },
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              )),
-                        ),
-                  
+                        Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xFF08228D),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            width: 250,
+                            height: 50,
+                            child: TextButton(
+                                onPressed: () {
+                                  signInProvider.signInWithGoogle(context);
+                                },
+                                child: Container(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(width: 20),
+                                    Image(
+                                      height: 30,
+                                      image: NetworkImage(
+                                          'https://i.imgur.com/VCNBCZt.png'),
+                                    ),
+                                    SizedBox(width: 20),
+                                    Text(
+                                      "Login with Google",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ))),
+                          ),
+                        )
                       ],
                     ),
                   ]),
@@ -100,4 +134,25 @@ class LoginScreen extends StatelessWidget {
           )),
     );
   }
+
+//   Future<UserCredential> signInWithGoogle() async {
+//     // Create a new provider
+//     GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+//     // Once signed in, return the UserCredential
+//     try {
+//     var userCredential = await FirebaseAuth.instance.signInWithPopup(googleProvider);
+//     // print(userCredential);
+
+//     return userCredential;
+// } catch (error) {
+//     // Handle the error appropriately
+//    print("An error occurred while signing in: $error");
+//     // Optionally, you can throw the error again to let the caller handle it
+//     throw error;
+// }
+
+//     // Or use signInWithRedirect
+//     // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+//   }
 }
