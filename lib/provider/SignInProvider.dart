@@ -27,9 +27,6 @@ class SignInProvider extends ChangeNotifier {
 
   Future<void> signOutGoogle(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginScreen()),
-    );
+    Navigator.pop(context);
   }
 }
