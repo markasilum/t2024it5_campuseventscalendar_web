@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:t2024it5_campuseventscalendar_web/screens/homeScreen.dart';
+import 'package:t2024it5_campuseventscalendar_web/screens/loginScreen.dart';
 
 class SignInProvider extends ChangeNotifier {
   Future<void> signInWithGoogle(BuildContext context) async {
@@ -22,12 +23,13 @@ class SignInProvider extends ChangeNotifier {
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     }
-
-    // Or use signInWithRedirect
-    // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
   }
 
-//     // Or use signInWithRedirect
-//     // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
-//   }
+  Future<void> signOutGoogle(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+    );
+  }
 }

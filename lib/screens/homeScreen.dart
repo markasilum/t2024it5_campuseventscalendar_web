@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:t2024it5_campuseventscalendar_web/provider/SignInProvider.dart';
 import 'package:t2024it5_campuseventscalendar_web/screens/loginScreen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -6,6 +8,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+        final signInProvider = Provider.of<SignInProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
@@ -23,11 +28,9 @@ class HomeScreen extends StatelessWidget {
           width: 400,
           height: 40,
           child: TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
+              onPressed: () async {
+                await signInProvider.signOutGoogle(context);
+               
               },
               child: Text(
                 "Logout",
