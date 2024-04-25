@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
           // 'https://i.imgur.com/VPg47zp.png'
           decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage("https://i.imgur.com/hnQrSM4.jpeg"), // Replace with your image URL
+            image: NetworkImage("https://i.imgur.com/hnQrSM4.jpeg"),
             fit: BoxFit.cover, // This will cover the entire container
           ),
         ),
