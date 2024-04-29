@@ -16,7 +16,7 @@ class EventCard extends StatelessWidget {
       ),
       child: Container(
         height: 500,
-        padding: EdgeInsets.all(10),
+        // padding: EdgeInsets.all(1),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           gradient: LinearGradient(
@@ -36,63 +36,78 @@ class EventCard extends StatelessWidget {
           children: [
             Center(
               child: Container(
-                margin: EdgeInsets.only(top: 10),
+                // margin: EdgeInsets.only(top: 10),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20), // Adjust the border radius as needed
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)), // Adjust the border radius as needed
                   child: SizedBox(
                     height: 350,
+                    width: 400,
                     child: CachedNetworkImage(
                       imageUrl: event['images'][0],
                       width: 350,
-                      placeholder: (context, url) => CircularProgressIndicator(),
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
                       errorWidget: (context, url, error) => Icon(Icons.error),
-                      fit: BoxFit.fitWidth, // Ensure the image fits the width of its container
+                      fit: BoxFit.cover, // Ensure the image fits the width of its container
                     ),
                   ),
                 ),
               ),
             ),
             Expanded(
-  child: Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      SizedBox(height: 20),
-      Text(
-        event['eventName'],
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      SizedBox(height: 5),
-      Text(
-        event['location'],
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 16,
-        ),
-      ),
-      SizedBox(height: 5),
-      Text(
-        event['organizer'],
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 16,
-        ),
-      ),
-      SizedBox(height: 20),
-    ],
-  ),
-),
-SizedBox(height: 20), // Add spacing between the Column and the ElevatedButton
-ElevatedButton(
-  onPressed: () {},
-  child: Container(
-    child: Text('Edit'),
-  ),
-),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 10),
+                    Text(
+                      event['eventName'],
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      event['location'],
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      event['organizer'],
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+                height:
+                    20), // Add spacing between the Column and the ElevatedButton
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: Container(
+                      child: Text('Edit', style: TextStyle(color: Color(0xFF08228D)),),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

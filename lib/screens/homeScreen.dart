@@ -18,12 +18,41 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xFF08228D),
         centerTitle: false,
-        title: Header()
+        title: Header(),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Add your onPressed action here
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.add,
+                    color: Color(0xFF08228D), // Set icon color to blue
+                  ),
+                  Text(
+                    'Add Event',
+                    style: TextStyle(
+                      color: Color(0xFF08228D), // Set text color to white
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
+      
       body: Row(
         children: [
           SideBar(),
-          
           StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection('events').snapshots(),
             builder: (context, snapshot) {
@@ -32,11 +61,10 @@ class HomeScreen extends StatelessWidget {
                 return Expanded(
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4, // Limit to three columns
-                      crossAxisSpacing: 10.0, // Spacing between columns
-                      mainAxisSpacing: 10.0, // Spacing between rows
-                      childAspectRatio: .7
-                    ),
+                        crossAxisCount: 4, // Limit to three columns
+                        crossAxisSpacing: 25.0, // Spacing between columns
+                        mainAxisSpacing: 25.0, // Spacing between rows
+                        childAspectRatio: .7),
                     itemCount: events!.length,
                     itemBuilder: (context, index) {
                       final event = events[index];
