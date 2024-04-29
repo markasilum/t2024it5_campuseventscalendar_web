@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:t2024it5_campuseventscalendar_web/screens/homeScreen.dart';
 
 class EventCard extends StatelessWidget {
   final QueryDocumentSnapshot<Object?> event;
@@ -35,24 +36,17 @@ class EventCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Container(
-                // margin: EdgeInsets.only(top: 10),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)), // Adjust the border radius as needed
-                  child: SizedBox(
-                    height: 350,
-                    width: 400,
-                    child: CachedNetworkImage(
+              child: event['images'] != null && event['images'].isNotEmpty
+                  ? CachedNetworkImage(
                       imageUrl: event['images'][0],
                       width: 350,
                       placeholder: (context, url) =>
                           CircularProgressIndicator(),
                       errorWidget: (context, url, error) => Icon(Icons.error),
-                      fit: BoxFit.cover, // Ensure the image fits the width of its container
-                    ),
-                  ),
-                ),
-              ),
+                      fit: BoxFit
+                          .cover, // Ensure the image fits the width of its container
+                    )
+                  : Container(),
             ),
             Expanded(
               child: Padding(
@@ -86,6 +80,14 @@ class EventCard extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
+                    SizedBox(height: 5),
+                    Text(
+                      event.id,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
                     SizedBox(height: 20),
                   ],
                 ),
@@ -100,9 +102,20 @@ class EventCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      HomeScreen().createEvent(context, eventId: event.id);
+                    },
                     child: Container(
-                      child: Text('Edit', style: TextStyle(color: Color(0xFF08228D)),),
+                      child: Row(
+                        children: [
+                          Text(
+                           'Edit: ',
+                            style: TextStyle(color: Color(0xFF08228D)),
+                          ),
+                           Text( event.id)
+                        ],
+                      ),
+                     
                     ),
                   ),
                 ),
