@@ -15,8 +15,9 @@ class SideBar extends StatelessWidget {
       padding: EdgeInsets.all(20),
       height: screenSize.height,
       width: 250,
+      margin: EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
-        color: Colors.grey[400]
+        color: Colors.grey[200]
       ),
       child: Column(
         children: [
@@ -28,8 +29,8 @@ class SideBar extends StatelessWidget {
           //       image: AssetImage("/images/university-seal.png"))
           //   ),
           // ),
-          SizedBox(height: 20,),
-          Text("Community Center Asset Management System", textAlign: TextAlign.center,),
+          // SizedBox(height: 20,),
+          // Text("Community Center Asset Management System", textAlign: TextAlign.center,),
           SizedBox(height: 40),
           TextButton(
             onPressed: (){
@@ -52,48 +53,29 @@ class SideBar extends StatelessWidget {
               ),
             )),
             SizedBox(height: 5),
-          TextButton(
-            onPressed: (){
-              //  Navigator.pop(context);
-              //  Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingScreen()));
-            }, 
-            child: Container(
-              height: 50,
-              width: 200,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5)
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Setting", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),),
-                ],
-              ),
-            )),
-             SizedBox(height: 5),
-          TextButton(
-            onPressed: (){
-              //  Navigator.pop(context);
-              //  Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
-            }, 
-            child: Container(
-              height: 50,
-              width: 200,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5)
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Profile", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),),
-                ],
-              ),
-            )),
-            SizedBox(height: 5),
+          // TextButton(
+          //   onPressed: (){
+          //     //  Navigator.pop(context);
+          //     //  Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingScreen()));
+          //   }, 
+          //   child: Container(
+          //     height: 50,
+          //     width: 200,
+          //     decoration: BoxDecoration(
+          //       color: Colors.white,
+          //       borderRadius: BorderRadius.circular(5)
+          //     ),
+          //     child: Column(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       children: [
+          //         Text("Create Event", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),),
+          //       ],
+          //     ),
+          //   )),
+          //    SizedBox(height: 5),
+          
+            
           TextButton(
             onPressed: () async {
                 await signInProvider.signOutGoogle(context);

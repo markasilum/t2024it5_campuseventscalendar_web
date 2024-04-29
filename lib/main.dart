@@ -1,16 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:t2024it5_campuseventscalendar_web/screens/errorPage.dart';
 import 'package:t2024it5_campuseventscalendar_web/screens/splashScreen.dart';
 
-import 'package:provider/provider.dart';
 import 'package:t2024it5_campuseventscalendar_web/provider/SignInProvider.dart';
-import 'package:flutter/material.dart';
 import 'package:t2024it5_campuseventscalendar_web/screens/homeScreen.dart';
 import 'package:t2024it5_campuseventscalendar_web/screens/loginScreen.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
 
 main() {
   runApp(
