@@ -36,17 +36,24 @@ class EventCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: event['images'] != null && event['images'].isNotEmpty
-                  ? CachedNetworkImage(
+              child: Container(
+                // margin: EdgeInsets.only(top: 10),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)), // Adjust the border radius as needed
+                  child: SizedBox(
+                    height: 350,
+                    width: 400,
+                    child: CachedNetworkImage(
                       imageUrl: event['images'][0],
                       width: 350,
                       placeholder: (context, url) =>
                           CircularProgressIndicator(),
                       errorWidget: (context, url, error) => Icon(Icons.error),
-                      fit: BoxFit
-                          .cover, // Ensure the image fits the width of its container
-                    )
-                  : Container(),
+                      fit: BoxFit.cover, // Ensure the image fits the width of its container
+                    ),
+                  ),
+                ),
+              ),
             ),
             Expanded(
               child: Padding(
@@ -80,14 +87,6 @@ class EventCard extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Text(
-                      event.id,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
                     SizedBox(height: 20),
                   ],
                 ),
@@ -102,20 +101,12 @@ class EventCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: ElevatedButton(
-                    onPressed: () {
-                      HomeScreen().createEvent(context, eventId: event.id);
+                    onPressed: (){
+                      HomeScreen().createEvent(context,eventId: event.id, eventName: event['eventName'], description: event['description'], email: event['email'], location: event['location'], organizer: event['organizer']);
+                      //{String? eventId,String? eventName, String? description, String? email, String? location, String? organizer}
                     },
                     child: Container(
-                      child: Row(
-                        children: [
-                          Text(
-                           'Edit: ',
-                            style: TextStyle(color: Color(0xFF08228D)),
-                          ),
-                           Text( event.id)
-                        ],
-                      ),
-                     
+                      child: Text('Edit', style: TextStyle(color: Color(0xFF08228D)),),
                     ),
                   ),
                 ),

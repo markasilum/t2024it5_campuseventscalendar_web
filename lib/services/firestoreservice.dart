@@ -7,27 +7,28 @@ class FireStoreService {
 
   //CREATE
   //to add images
-  Future<void>addEvent(String eventName, String description, String email, String location, String organizer){
+  Future<void>addEvent(String eventName, String description, String email, String location, String organizer,List<String>? _downloadUrls,){
     return events.add({
       'eventName': eventName,
       'description': description,
       'email': email,
       'location': location,
       'organizer': organizer,
-      'images': [],
+      'images': _downloadUrls,
       // 'startDate': startDate,
       // 'endDate': endDate,
     });
   }
 
   //UPDATE
-  Future<void> updateEvent(String eventId, String eventName, String description, String email, String location, String organizer){
+  Future<void> updateEvent(String eventId, String newEventName, String newDescription, String newEmail, String newLocation, String newOrganizer){
     return events.doc(eventId).update({
-      'eventName': eventName,
-      'description': description,
-      'email': email,
-      'location': location,
-      'organizer': organizer,
+      'eventName': newEventName,
+      'description': newDescription,
+      'email': newEmail,
+      'location': newLocation,
+      'organizer': newOrganizer,
+      'images': ['temp'],
     }
     );
   }

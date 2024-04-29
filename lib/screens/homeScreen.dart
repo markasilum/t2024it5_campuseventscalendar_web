@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:t2024it5_campuseventscalendar_web/provider/SignInProvider.dart';
@@ -7,30 +9,86 @@ import 'package:t2024it5_campuseventscalendar_web/widgets/eventsCards.dart';
 import 'package:t2024it5_campuseventscalendar_web/widgets/header.dart';
 import 'package:t2024it5_campuseventscalendar_web/widgets/sideBarWidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
-  void createEvent(BuildContext context, {String? eventId}) {
-    final _homeScreenState = context.findAncestorStateOfType<_HomeScreenState>();
-    _homeScreenState?.showCreateEventDialog(eventId:eventId);
-  }
+  void createEvent(
+  BuildContext context, {
+  String? eventId,
+  String? eventName,
+  String? description,
+  String? email,
+  String? location,
+  String? organizer,
+}) {
+  final _homeScreenState = context.findAncestorStateOfType<_HomeScreenState>();
+  _homeScreenState?.showCreateEventDialog(
+    eventId: eventId,
+    eventName: eventName,
+    description: description,
+    email: email,
+    location: location,
+    organizer: organizer,
+  );
+
+}
 }
 
 class _HomeScreenState extends State<HomeScreen> {
 
   final FireStoreService fireStoreService = FireStoreService();
 
+  final ImagePicker picker = ImagePicker();
+
+  List<XFile> _imageFiles = [];
+  List<String> _downloadUrls = [];
+
+  Future pickImage() async {
+    List<XFile>? pickedImages = await picker.pickMultiImage();
+
+    if (pickedImages != null) {
+      setState(() {
+        _imageFiles = pickedImages;
+      });
+    }
+  }
+
+  Future uploadPhotos() async {
+  final path = 'images/';
+
+  for (var imageFile in _imageFiles) {
+    final file = File(imageFile.path);
+
+    final ref = FirebaseStorage.instance.ref().child(path + imageFile.name);
+    final uploadTask = ref.putFile(file);
+    
+    await uploadTask.whenComplete(() async {
+      final downloadUrl = await ref.getDownloadURL();
+      setState(() {
+        _downloadUrls.add(downloadUrl);
+      });
+    });
+  }
+}
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController organizationController = TextEditingController();
+  
 
-  void showCreateEventDialog({String? eventId}) {
-    print(eventId);
+  void showCreateEventDialog({String? eventId,String? eventName, String? description, String? email, String? location, String? organizer}) {
+    nameController.text = eventName ?? '';
+    descriptionController.text = description ?? '';
+    emailController.text = email ?? '';
+    locationController.text = location ?? '';
+    organizationController.text = organizer ?? '';
+
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -41,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.white,
               content: Container(
                 width: 600,
-                height: 450,
+                height: 500,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,6 +174,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 10,
                     ),
+                      
+                     SizedBox(
+                      width: 160,
+                       child: ElevatedButton(
+                        onPressed: ()=>pickImage(), 
+                        child: Row(
+                          children: [
+                            const Icon(Icons.upload),
+                            Text("Upload image")
+                          ],
+                        ),
+                        ),
+                     )
 
                     //  Text("Start Date", style: TextStyle(fontSize: 15),),
                     // TextField(),
@@ -130,21 +201,26 @@ class _HomeScreenState extends State<HomeScreen> {
               actions: [
                 ElevatedButton(
                   onPressed: () {
-                    fireStoreService.addEvent(nameController.text, descriptionController.text, emailController.text, locationController.text, organizationController.text);
+                    // fireStoreService.addEvent(nameController.text, descriptionController.text, emailController.text, locationController.text, organizationController.text);
+                   
+
+                    if(eventId == null){
                       print("id present");
-                    nameController.clear();
+                       uploadPhotos();
+                      print(_downloadUrls);
+                      fireStoreService.addEvent(nameController.text, descriptionController.text, emailController.text, locationController.text, organizationController.text, _downloadUrls);
+                    
+                    }else{
+                       print("id not present");
+                       print(eventId);
+                       fireStoreService.updateEvent(eventId, nameController.text, descriptionController.text, emailController.text, locationController.text, organizationController.text, );
+                    }
+                     
+                     nameController.clear();
                     descriptionController.clear();
                     emailController.clear();
                     locationController.clear();
                     organizationController.clear();
-
-                    if(eventId == null){
-                      print("id present");
-                      fireStoreService.addEvent(nameController.text, descriptionController.text, emailController.text, locationController.text, organizationController.text);
-                    }else{
-                       print("id not present");
-                      fireStoreService.updateEvent(eventId, nameController.text, descriptionController.text, emailController.text, locationController.text, organizationController.text);
-                    }
 
                     Navigator.pop(context);
                   }, 
