@@ -7,14 +7,15 @@ class FireStoreService {
 
   //CREATE
   //to add images
-  Future<void>addEvent(String eventName, String description, String email, String location, String organizer,List<String>? _downloadUrls,){
+  Future<void>addEvent(String eventName, String description, String email, String location, String organizer,List<String>_downloadUrls,){
     return events.add({
       'eventName': eventName,
       'description': description,
       'email': email,
       'location': location,
       'organizer': organizer,
-      'images': _downloadUrls,
+      // 'images': _downloadUrls,
+      'images':["missing"]
       // 'startDate': startDate,
       // 'endDate': endDate,
     });

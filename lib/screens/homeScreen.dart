@@ -50,28 +50,42 @@ class _HomeScreenState extends State<HomeScreen> {
   Future pickImage() async {
     List<XFile>? pickedImages = await picker.pickMultiImage();
 
-    if (pickedImages != null) {
-      setState(() {
-        _imageFiles = pickedImages;
-      });
+    if (pickedImages!.isNotEmpty) {
+      _imageFiles!.addAll(pickedImages);
     }
+    print("Image List Length:" + _imageFiles!.length.toString());
+    print(_imageFiles);
+    setState((){});
   }
 
   Future uploadPhotos() async {
+    print('upload images called');
+
+    
   final path = 'images/';
 
   for (var imageFile in _imageFiles) {
     final file = File(imageFile.path);
-
+    print("file path: ${file}");
     final ref = FirebaseStorage.instance.ref().child(path + imageFile.name);
-    final uploadTask = ref.putFile(file);
-    
-    await uploadTask.whenComplete(() async {
-      final downloadUrl = await ref.getDownloadURL();
-      setState(() {
+    print("Reference to $ref");
+
+
+    final uploadTask = await ref.putFile(file);
+
+    final downloadUrl = await ref.getDownloadURL();
+    print(downloadUrl);
+    setState(() {
         _downloadUrls.add(downloadUrl);
       });
-    });
+    
+    // await uploadTask.whenComplete(() async {
+    //   final downloadUrl = await ref.getDownloadURL();
+    //   print(downloadUrl);
+    //   setState(() {
+    //     _downloadUrls.add(downloadUrl);
+    //   });
+    // });
   }
 }
 
@@ -206,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     if(eventId == null){
                       print("id present");
-                       uploadPhotos();
+                      uploadPhotos();
                       print(_downloadUrls);
                       fireStoreService.addEvent(nameController.text, descriptionController.text, emailController.text, locationController.text, organizationController.text, _downloadUrls);
                     
@@ -290,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Expanded(
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4, // Limit to three columns
+                        crossAxisCount: 3, // Limit to three columns
                         crossAxisSpacing: 25.0, // Spacing between columns
                         mainAxisSpacing: 25.0, // Spacing between rows
                         childAspectRatio: .67),
